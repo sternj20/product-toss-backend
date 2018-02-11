@@ -29,7 +29,7 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static(path.join(__dirname, 'public')));
 // app.use(routes)
 app.get('/items', (req, res) => {
-	res.send(data)
+	res.send(data.items)
 })
 
 
