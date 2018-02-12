@@ -34,8 +34,7 @@ app.get('/items', (req, res) => {
 
 
 mongoose.connect(process.env.MONGODB_URI,
-  { useMongoClient:true,
-    promiseLibrary: global.Promise }
+  {promiseLibrary: global.Promise }
 );
 
 const port = process.env.PORT || 3000;
