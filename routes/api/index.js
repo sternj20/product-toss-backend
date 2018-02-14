@@ -10,8 +10,6 @@ router.get('/imgs', (req, res) => {
 
 //Update an image in DB, positive or negative votes
 router.put('/imgs/:id/:value/:operation', (req, res) => {
-	console.log(req.params.id)
-	console.log(req.params.value)
 	let query = {'_id': req.params.id}
 	let newData;
 	if(req.params.operation === 'positive') {
@@ -21,8 +19,14 @@ router.put('/imgs/:id/:value/:operation', (req, res) => {
 	}
 	Image.findOneAndUpdate(query, newData, {upsert:true}, function(err, doc){
     if (err) return res.send(500, { error: err });
-    return res.send("succesfully saved");
-});
+	  let newData;
+		if(req.params.operation === 'positive') {
+			newData = {posVotes: doc.posVotes++};
+		} else {
+			newData = {negVotes: doc.negVotes--};
+		}
+		res.send('successfully updated')
+	});
 })
 
 module.exports = router;
