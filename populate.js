@@ -16,9 +16,6 @@ const images = [
   },
   {
     url: 'http://markinternational.info/data/out/619/224379091-random-picture.jpeg'
-  },
-  {
-    url: 'http://markinternational.info/data/out/619/224379091-random-picture.jpeg'
   }
 ];
 
