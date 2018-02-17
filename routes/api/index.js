@@ -9,7 +9,7 @@ router.get('/imgs', (req, res) => {
 })
 
 //Update # of votes in
-router.put('/imgs/:id/:value/:operation', (req, res) => {
+router.put('/imgs/:id/:value/', (req, res) => {
 	let query = {'_id': req.params.id}
 	let newData = {posVotes: parseInt(req.params.value) + 1, voted: true}
 	Image.findOneAndUpdate(query, newData, {upsert:true}, function(err, doc){
