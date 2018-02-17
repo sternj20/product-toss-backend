@@ -5,7 +5,7 @@ const imageSchema = new Schema({
 	url: {
 		type: String
 	},
-	posVotes: {
+	votes: {
 		type: Number,
 		default: 0
 	},
