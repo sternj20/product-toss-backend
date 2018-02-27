@@ -11,8 +11,10 @@ router.get('/imgs', (req, res) => {
 })
 
 router.post('/imgs', upload.single('photo'), (req, res, next) => {
-  let newImg = new Image(req.file)
-  newImg.save()
+  res.send(req.file)
+  console.log(req)
+  // let newImg = new Image(req.file)
+  // newImg.save()
 })
 
 //Update # of votes in
