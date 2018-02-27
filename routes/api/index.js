@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const Image = require('../../models/Image.js');
+var multer  = require('multer');
+var upload = multer();
 //Gets all images
 router.get('/imgs', (req, res) => {
 	let imgs;
@@ -8,9 +10,8 @@ router.get('/imgs', (req, res) => {
 	})
 })
 
-router.post('/imgs', (req, res) => {
-	res.send(req.body)
-	console.log(req)
+router.post('/imgs', upload.single('photo'), (req, res, next) => {
+  res.json(req.file)
 })
 
 //Update # of votes in
