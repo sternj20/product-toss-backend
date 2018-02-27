@@ -8,6 +8,11 @@ router.get('/imgs', (req, res) => {
 	})
 })
 
+router.post('/imgs', (req, res) => {
+	res.send(req.body)
+	console.log(req.body)
+})
+
 //Update # of votes in
 router.put('/imgs/:id/:value/', (req, res) => {
 	let query = {'_id': req.params.id}
@@ -17,5 +22,6 @@ router.put('/imgs/:id/:value/', (req, res) => {
 		res.send('successfully updated')
 	});
 })
+
 
 module.exports = router;
