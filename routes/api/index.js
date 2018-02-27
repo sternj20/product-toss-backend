@@ -11,7 +11,8 @@ router.get('/imgs', (req, res) => {
 })
 
 router.post('/imgs', upload.single('photo'), (req, res, next) => {
-  res.json(req.file)
+  let newImg = new Image(req.file)
+  newImg.save()
 })
 
 //Update # of votes in
@@ -26,3 +27,4 @@ router.put('/imgs/:id/:value/', (req, res) => {
 
 
 module.exports = router;
+

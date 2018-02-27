@@ -2,7 +2,13 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const imageSchema = new Schema({
-	url: {
+	uri: {
+		type: String
+	},
+	name: {
+		type: String
+	},
+	type: {
 		type: String
 	},
 	votes: {
