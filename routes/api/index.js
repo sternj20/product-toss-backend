@@ -10,7 +10,7 @@ router.get('/imgs', (req, res) => {
 
 router.post('/imgs', (req, res) => {
 	res.send(req.body)
-	console.log(req.body)
+	console.log(req)
 })
 
 //Update # of votes in
