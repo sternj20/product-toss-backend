@@ -6,16 +6,37 @@ require('dotenv').config();
 
 const images = [
   {
-    url: 'http://markinternational.info/data/out/619/224378344-random-picture.jpg'
+    url: 'https://i.imgur.com/QLevheC.jpg'
   },
   {
-    url: 'http://markinternational.info/data/out/619/224378592-random-picture.jpg'
+    url: 'https://i.imgur.com/N0HqWH0.jpg'
   },
   {
-    url: 'http://markinternational.info/data/out/619/224379098-random-picture.jpg'
+    url: 'https://i.imgur.com/5wKAT9T.jpg'
   },
   {
-    url: 'http://markinternational.info/data/out/619/224379091-random-picture.jpeg'
+    url: 'https://i.imgur.com/zTbh6K1.jpg'
+  },
+  {
+    url: 'https://i.imgur.com/uHQsKx4.jpg'
+  },
+  {
+    url: 'https://i.imgur.com/j1sOGOp.jpg'
+  },
+  {
+    url: 'https://i.imgur.com/gGzVYfg.jpg'
+  },
+  {
+    url: 'https://i.imgur.com/vmawrkj.jpg'
+  },
+  {
+    url: 'https://i.imgur.com/moYE61R.jpg'
+  },
+  {
+    url: 'https://i.imgur.com/WxwlP43.jpg'
+  },
+  {
+    url: 'https://i.imgur.com/cGB1SN8.jpg'
   }
 ];
 
