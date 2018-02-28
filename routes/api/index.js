@@ -22,7 +22,7 @@ const upload = multer({
     },
     key(req, file, cb) {
       let type = file.mimetype.split('/')[1]
-      cb(null, Date.now().toString() + type);
+      cb(null, Date.now().toString() + "." + type);
     }
   })
 })
