@@ -21,12 +21,12 @@ const upload = multer({
       cb(null, {fieldName: file.fieldname});
     },
     key(req, file, cb) {
-      cb(null, Date.now().toString() + '.png');
+      cb(null, Date.now().toString() + '.jpg');
     }
   })
 })
 
-
+	
 //Gets all images
 router.get('/imgs', (req, res) => {
 	let imgs;
