@@ -37,7 +37,7 @@ router.get('/imgs', (req, res) => {
 })
 
 router.post('/imgs', upload.single('photo'), (req, res, next) => {
-  res.json(req.file)
+  res.send(req.file)
   let img = new Image({url: req.file.location})
   img.save();
 })
