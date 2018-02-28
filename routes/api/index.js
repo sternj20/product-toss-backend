@@ -37,6 +37,7 @@ router.get('/imgs', (req, res) => {
 
 router.post('/imgs', upload.single('photo'), (req, res, next) => {
   res.json(req.file)
+  console.log(req)
 })
 
 
