@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const Image = require('../../models/Image.js');
 var multer  = require('multer');
-var upload = multer();
+var upload = multer({ dest: 'uploads/' })
 //Gets all images
 router.get('/imgs', (req, res) => {
 	let imgs;
