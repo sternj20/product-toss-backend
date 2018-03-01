@@ -53,13 +53,14 @@ router.post('/user/new/', (req, res) => {
 })
 
 //Update # of votes in
-router.put('/imgs/:id/:value/', (req, res) => {
-	let query = {'_id': req.params.id}
-	let newData = {votes: parseInt(req.params.value) + 1, voted: true}
-	Image.findOneAndUpdate(query, newData, {upsert:true}, function(err, doc){
-    if (err) return res.send(500, { error: err });
-		res.send('successfully updated')
-	});
+router.put('/imgs/:uid/:id/:value/', (req, res) => {
+  User.findOneAndUpdate({ _id : req.params.uid }, {$push: {votedImages: req.params.id}}
+	// let query = {'_id': req.params.id}
+	// let newData = {votes: parseInt(req.params.value) + 1, voted: true}
+	// Image.findOneAndUpdate(query, newData, {upsert:true}, function(err, doc){
+ //    if (err) return res.send(500, { error: err });
+	// 	res.send('successfully updated')
+	// });
 })
 
 
