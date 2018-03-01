@@ -30,11 +30,14 @@ const upload = multer({
 
 	
 //Gets all images
-router.get('/imgs', (req, res) => {
+router.get('/imgs/:id', (req, res) => {
 	let imgs;
-	Image.find({voted:false}, (err, img) => {
-		res.send(img)
-	})
+	// Image.find({voted:false}, (err, img) => {
+	// 	res.send(img)
+	// })
+  User.findOne({ _id : req.params.uid}).populate("votedImages").exec((error, result) => {
+    res.json(results.votedImages)
+  })
 })
 
 router.post('/imgs', upload.single('photo'), (req, res, next) => {
@@ -52,7 +55,6 @@ router.post('/user/new/', (req, res) => {
   res.json(req.body)
 })
 
-//Update # of votes in
 router.put('/imgs/:uid/:id/', (req, res) => {
   User.findByIdAndUpdate(
       req.params.uid,
@@ -62,12 +64,6 @@ router.put('/imgs/:uid/:id/', (req, res) => {
           console.log(err);
       }
   );
-	// let query = {'_id': req.params.id}
-	// let newData = {votes: parseInt(req.params.value) + 1, voted: true}
-	// Image.findOneAndUpdate(query, newData, {upsert:true}, function(err, doc){
- //    if (err) return res.send(500, { error: err });
-	// 	res.send('successfully updated')
-	// });
 })
 
 
