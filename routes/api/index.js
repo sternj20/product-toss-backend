@@ -45,7 +45,10 @@ router.post('/imgs', upload.single('photo'), (req, res, next) => {
 
 router.post('/user/new/:id', (req, res) => {
   console.log(req.body)
-  let user = new User(req.body)
+  let user = new User({
+    _id: req.body.uid,
+    email: req.body.email
+  })
   user.save()
   res.json(req.body)
 })
