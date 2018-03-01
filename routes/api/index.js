@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const Image = require('../../models/Image.js');
+const User = require('../../models/User.js');
+
 const aws = require('aws-sdk')
 const multer = require('multer')
 const multerS3 = require('multer-s3')
@@ -37,11 +39,15 @@ router.get('/imgs', (req, res) => {
 })
 
 router.post('/imgs', upload.single('photo'), (req, res, next) => {
-  res.send(req.file)
+  res.json(req.file)
   let img = new Image({url: req.file.location})
   img.save();
 })
 
+router.post('/user/new', (req, res) => {
+  let user = new User()
+  user.save()
+})
 
 //Update # of votes in
 router.put('/imgs/:id/:value/', (req, res) => {
