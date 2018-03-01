@@ -14,7 +14,7 @@ const UserSchema = new Schema({
   images: [{
   	type: Schema.Types.ObjectId,
   	ref: "Image"
-  }]
+  }],
   votedImages: [{
     type: Schema.Types.ObjectId,
     ref: "Image" 
