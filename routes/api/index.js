@@ -46,6 +46,7 @@ router.post('/imgs', upload.single('photo'), (req, res, next) => {
 router.post('/user/new', (req, res) => {
   let user = new User()
   user.save()
+  res.json(req.body)
 })
 
 //Update # of votes in
