@@ -65,6 +65,7 @@ router.put('/imgs/:uid/:id/', (req, res) => {
       function(err, model) {
           console.log(err);
       }
+      res.send('')
   );
 })
 
