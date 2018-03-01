@@ -35,7 +35,7 @@ router.get('/imgs/:id', (req, res) => {
 	// Image.find({voted:false}, (err, img) => {
 	// 	res.send(img)
 	// })
-  User.findOne({ _id : req.params.uid}).populate("votedImages").exec((error, result) => {
+  User.findOne({ _id : req.params.id}).populate("votedImages").exec((error, result) => {
     res.json(results.votedImages)
   })
 })
