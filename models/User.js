@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-var UserSchema = new Schema({
+const UserSchema = new Schema({
   _id: {
     type: String
   },
@@ -13,11 +13,10 @@ var UserSchema = new Schema({
   },
   images: [{
   	type: Schema.Types.ObjectId,
-  	ref "Image"
+  	ref: "Image"
   }]
 });
 
-var User = mongoose.model("User", UserSchema);
 
 // Export the model
-module.exports = User;
+module.exports = mongoose.model("User", UserSchema);
