@@ -53,7 +53,7 @@ router.post('/user/new/', (req, res) => {
 })
 
 //Update # of votes in
-router.put('/imgs/:uid/:id/:value/', (req, res) => {
+router.put('/imgs/:uid/:id/', (req, res) => {
   User.findByIdAndUpdate(
       req.params.uid,
       {$push: {votedImages:req.params.id}},
