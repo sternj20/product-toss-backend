@@ -54,7 +54,7 @@ router.post('/user/new/', (req, res) => {
 
 //Update # of votes in
 router.put('/imgs/:uid/:id/:value/', (req, res) => {
-  User.findOneAndUpdate({ _id : req.params.uid }, {$push: {votedImages: req.params.id}}
+  User.findOneAndUpdate({ _id : req.params.uid }, {$push: {votedImages: req.params.id}})
 	// let query = {'_id': req.params.id}
 	// let newData = {votes: parseInt(req.params.value) + 1, voted: true}
 	// Image.findOneAndUpdate(query, newData, {upsert:true}, function(err, doc){
