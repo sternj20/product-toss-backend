@@ -60,8 +60,10 @@ router.post('/user/new/', (req, res) => {
 router.put('/imgs/:uid/:id/:val', (req, res) => {
   User.findByIdAndUpdate(
       req.params.uid,
-      {$push: {votedImages:req.params.id}},
-      {$set: {votes: parseInt(req.params.value) + 1}},
+      {
+        $push: {votedImages:req.params.id},
+        $set: {votes: parseInt(req.params.value) + 1}
+      },
       {safe: true, upsert: true},
       function(err, model) {
           console.log(err);
