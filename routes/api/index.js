@@ -48,6 +48,7 @@ router.post('/imgs/:uid', upload.single('photo'), (req, res, next) => {
   let img = new Image({url: req.file.location})
   img.save(function(err,img) {
     if(err) return err
+      console.log(img)
     imgId = img._id
   });
   User.update(
