@@ -43,9 +43,8 @@ router.get('/imgs/:id', (req, res) => {
   })
 })
 
-router.post('/imgs/:uid', upload.single('photo'), (req, res) => {
+router.post('/imgs/:uid', upload.single('photo'), (req, res, next) => {
   let imgId;
-  res.json(req.file)
   let img = new Image({url: req.file.location})
   img.save(function(err,id) {
     if(err) return err
@@ -61,7 +60,7 @@ router.post('/imgs/:uid', upload.single('photo'), (req, res) => {
           console.log(err);
       }
   );
-  res.send('')
+  res.json(req.file)
 })
 
 
