@@ -46,9 +46,9 @@ router.get('/imgs/:id', (req, res) => {
 router.post('/imgs/:uid', upload.single('photo'), (req, res, next) => {
   let imgId;
   let img = new Image({url: req.file.location})
-  img.save(function(err,id) {
+  img.save(function(err,img) {
     if(err) return err
-    imgId = img._id
+    imgId = img.id
   });
   User.update(
       {_id: req.params.uid},
