@@ -43,7 +43,7 @@ router.get('/imgs/:id', (req, res) => {
   })
 })
 
-router.post('/imgs/:uid', upload.single('photo'), (req, res, next) => {
+router.post('/imgs/:uid', upload.single('photo'), (req, res) => {
   let imgId;
   res.json(req.file)
   let img = new Image({url: req.file.location})
