@@ -60,7 +60,7 @@ router.post('/imgs/:uid', upload.single('photo'), (req, res, next) => {
           console.log(err);
       }
   );
-  res.json(req.file)
+  res.send(imgId)
 })
 
 
