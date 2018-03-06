@@ -4,6 +4,7 @@ const User = require('../../models/User.js');
 const aws = require('aws-sdk')
 const multer = require('multer')
 const multerS3 = require('multer-s3')
+require('dotenv').config();
 
 
 const s3 = new aws.S3({
@@ -42,11 +43,23 @@ router.get('/imgs/:id', (req, res) => {
   })
 })
 
-router.post('/imgs', upload.single('photo'), (req, res, next) => {
+router.post('/imgs/:uid', upload.single('photo'), (req, res, next) => {
   res.json(req.file)
   let img = new Image({url: req.file.location})
   img.save();
+  User.update(
+      {_id: req.params.uid},
+      {
+        $push: {images:req.file.location},
+      },
+      {safe: true, upsert: true},
+      function(err, model) {
+          console.log(err);
+      }
+  );
+  res.send('')
 })
+
 
 router.post('/user/new/', (req, res) => {
   let user = new User({

@@ -11,8 +11,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(routes)
 
 
-mongoose.connect(process.env.MONGODB_URI,
-  {promiseLibrary: global.Promise }
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/pt"
+  // {promiseLibrary: global.Promise }
 );
 
 const port = process.env.PORT || 3000;
