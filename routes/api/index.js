@@ -29,7 +29,7 @@ const upload = multer({
   })
 })
 
-	
+
 //Gets all images
 router.get('/imgs/:id', (req, res) => {
 	let imgs;
@@ -43,28 +43,28 @@ router.get('/imgs/:id', (req, res) => {
   })
 })
 
+//Upload an image
 router.post('/imgs/:uid', upload.single('photo'), (req, res, next) => {
   let img = new Image({url: req.file.location})
   img.save(function(err,img) {
     if(err) return err
-      console.log(img._id)
-    let imgId = img._id
-  User.update(
+      let imgId = img._id
+    User.update(
       {_id: req.params.uid},
       {
         $push: {images:imgId},
       },
       {safe: true, upsert: true},
       function(err, model) {
-          console.log(err);
+        console.log(err);
       }
-  );
-  res.json(req.file)
+      );
+    res.json(req.file)
   });
 
 })
 
-
+//After user is authenticated with firebase, they are added to our DB
 router.post('/user/new/', (req, res) => {
   let user = new User({
     _id: req.body.uid,
@@ -74,24 +74,32 @@ router.post('/user/new/', (req, res) => {
   res.json(req.body)
 })
 
+//Showing uploaded images
+router.get('/user/:uid', (req, res) => {
+  User.findOne({ _id : req.params.uid}).populate("images").exec((error, result) => {
+    res.send(result)
+  })
+});
+
+//Voting on an image
 router.put('/imgs/:uid/:id/:val', (req, res) => {
   let query = {'_id': req.params.id}
   let newData = {votes: parseInt(req.params.val) + 1}
   Image.update(query, {$set: newData},{safe: true, upsert: true},
-      function(err, model) {
-          console.log(err);
-      }
-  );
+    function(err, model) {
+      console.log(err);
+    }
+    );
   User.update(
-      {_id: req.params.uid},
-      {
-        $push: {votedImages:req.params.id},
-      },
-      {safe: true, upsert: true},
-      function(err, model) {
-          console.log(err);
-      }
-  );
+    {_id: req.params.uid},
+    {
+      $push: {votedImages:req.params.id},
+    },
+    {safe: true, upsert: true},
+    function(err, model) {
+      console.log(err);
+    }
+    );
   res.send('')
 })
 
