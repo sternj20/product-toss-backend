@@ -76,7 +76,7 @@ router.post('/user/new/', (req, res) => {
 
 //Showing uploaded images
 router.get('/user/:uid', (req, res) => {
-  User.findOne({ _id : req.params.uid}).populate("images").exec((error, result) => {
+  User.findOne({ _id : req.params.uid}).populate("images").populate("votedImages").exec((error, result) => {
     res.send(result)
   })
 });
