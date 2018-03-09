@@ -61,19 +61,19 @@ router.post('/user/new/', (req, res) => {
   res.json(req.body)
 })
 
+
+
+
 //Showing user data
 router.get('/user/:uid', (req, res) => {
   data = {}
-  User.findOne({ _id : req.params.uid}).populate("votedImages").exec((error, result) => {
+  User.findOne({ _id : req.params.uid}).populate("votedImages").populate("images").exec((error, result) => {
     Image.find({ _id : { $nin: result.votedImages}}, (err, img) => {
-      data.votedImages = img
-    }).populate("images").exec((error, result) => {
-      data.images = result
-    res.send(data)
-
+      data.images=img
+      data.uploads=result.images
+      res.send(data)
     })
   })
-
 });
 
 //Voting on an image
