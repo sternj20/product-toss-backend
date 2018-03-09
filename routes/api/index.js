@@ -30,19 +30,6 @@ const upload = multer({
 })
 
 
-//Gets all images
-router.get('/imgs/:id', (req, res) => {
-	let imgs;
-	// Image.find({voted:false}, (err, img) => {
-	// 	res.send(img)
-	// })
-  User.findOne({ _id : req.params.id}).populate("votedImages").exec((error, result) => {
-    Image.find({ _id : { $nin: result.votedImages}}, (err, img) => {
-      res.send(img)
-    })
-  })
-})
-
 //Upload an image
 router.post('/imgs/:uid', upload.single('photo'), (req, res, next) => {
   let img = new Image({url: req.file.location})
@@ -74,11 +61,19 @@ router.post('/user/new/', (req, res) => {
   res.json(req.body)
 })
 
-//Showing uploaded images
+//Showing user data
 router.get('/user/:uid', (req, res) => {
-  User.findOne({ _id : req.params.uid}).populate("images").populate("votedImages").exec((error, result) => {
-    res.send(result)
+  data = {}
+  User.findOne({ _id : req.params.uid}).populate("votedImages").exec((error, result) => {
+    Image.find({ _id : { $nin: result.votedImages}}, (err, img) => {
+      data.votedImages = img
+    }).populate("images").exec((error, result) => {
+      data.images = result
+    res.send(data)
+
+    })
   })
+
 });
 
 //Voting on an image
