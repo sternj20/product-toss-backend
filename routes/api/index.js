@@ -112,8 +112,8 @@ router.post("/contest/new/", (req, res) => {
   contest.save(function(err,contest) {
     if(err) return err
     let contestId = contest._id
-    let j = schedule.scheduleJob('08 * * * *', function(){
-    Contest.findByIdAndUpdate(contestId, {active: false})
+    let j = schedule.scheduleJob('11 * * * *', function(){
+    Contest.update({_id:contestId},{"$set":{"active":false}})
     console.log('The answer to life, the universe, and everything!');
     });
   });
