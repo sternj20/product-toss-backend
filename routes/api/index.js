@@ -114,7 +114,7 @@ router.post("/contest/new/", (req, res) => {
     console.log(contest)
     if(err) return err
     work = contest._id
-    schedule.scheduleJob('11 * * * *', function(){
+    schedule.scheduleJob('11 * * * *', function(work){
       console.log(work)
     Contest.update({_id:contestId},{"$set":{"active":false}})
     console.log('The answer to life, the universe, and everything!');
