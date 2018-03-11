@@ -8,6 +8,7 @@ function checkActive() {
 
   Contest.find({expires:{$lte: currentDate}}, function (err, docs) {
     // docs is an array
+    if(err) console.log(err)
     console.log(docs)
   });
 }
