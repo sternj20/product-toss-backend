@@ -108,7 +108,8 @@ router.post("/contest/new/", (req, res) => {
     console.log(contest)
     if(err) return err
     let contestId = contest._id
-    schedule.scheduleJob('43 * * * *', function(){
+    var date = new Date(Date.now() + 5000)
+    schedule.scheduleJob(date, function(){
       let query = {'_id' : contestId}
       let newData = {active: false}
       Contest.update(query ,{$set: newData},{safe: true, upsert: true},
