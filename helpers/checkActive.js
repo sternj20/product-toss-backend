@@ -1,4 +1,4 @@
-const Contest = require('../../../models/Contest.js');
+const Contest = require('../models/Contest.js');
 
 function checkActive() {
   //Get current date
