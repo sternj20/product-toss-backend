@@ -18,7 +18,6 @@
     "moment": "^2.21.0",
     "mongoose": "^5.0.4",
     "multer": "^1.3.0",
-    "multer-s3": "^2.7.0",
-    "node-schedule": "^1.3.0"
+    "multer-s3": "^2.7.0"
   }
 }
