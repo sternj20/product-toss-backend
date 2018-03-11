@@ -12,10 +12,8 @@ function checkActive() {
         console.log(err);
       });
       console.log('Contest is over. Value of active has been changed from true to false')
-    });
-  });
   res.send('')
-})
+}
 checkActive();
 
 //Use moment
