@@ -115,8 +115,13 @@ router.post("/contest/new/", (req, res) => {
     if(err) return err
     let contestId = contest._id
     schedule.scheduleJob('28 * * * *', function(){
-    Contest.update({_id:contestId},{"$set":{"active":false}})
-    console.log(contestId);
+    let query = {'_id' : contestId}
+    let newData = {active: false}
+    Contest.update(query ,{$set: newData},{safe: true, upsert: true},
+    function(err, model) {
+      console.log(err);
+    }
+    );
     });
   });
 
