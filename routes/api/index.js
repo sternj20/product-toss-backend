@@ -4,6 +4,8 @@ const User = require('../../models/User.js');
 const aws = require('aws-sdk')
 const multer = require('multer')
 const multerS3 = require('multer-s3')
+const schedule = require('node-schedule');
+
 require('dotenv').config();
 
 
@@ -98,6 +100,16 @@ router.put('/imgs/:uid/:id/:val', (req, res) => {
   res.send('')
 })
 
+//Adding a new contest
+router.post("/contest/new/", (req, res) => {
+  //Here is the scheduling for a week? from when contest is created
+  //Query will be sent to Mongo that says to change the field of active from true to false for this one 
+  // const j = schedule.scheduleJob('51 * * * *', function(){
+  //   console.log('The answer to life, the universe, and everything!');
+  // });
+  res.send('')
+  console.log(req.body)
+})
 
 module.exports = router;
 

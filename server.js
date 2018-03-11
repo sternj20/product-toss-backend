@@ -18,4 +18,7 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/pt"
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`app listening on port ${port}`))
 
-//cmmentsg
+var schedule = require('node-schedule');
+var j = schedule.scheduleJob('48 * * * *', function(){
+  console.log('The answer to life, the universe, and everything!');
+});
