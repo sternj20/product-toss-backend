@@ -7,7 +7,7 @@ const ContestSchema = new Schema({
 	},
   active: {
     type: Boolean,
-    default: false
+    default: true
   },
 	submissions: [{
 	  	type: Schema.Types.ObjectId,
