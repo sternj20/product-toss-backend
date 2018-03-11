@@ -5,6 +5,9 @@ const ContestSchema = new Schema({
 	name: {
 		type: String
 	},
+  active: {
+    type: Boolean
+  },
 	submissions: [{
 	  	type: Schema.Types.ObjectId,
 	  	ref: "Image"
