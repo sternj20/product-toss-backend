@@ -103,6 +103,7 @@ router.put('/imgs/:uid/:id/:val', (req, res) => {
 
 //Adding a new contest
 router.post("/contest/new/", (req, res) => {
+  let work;
   //Here is the scheduling for a week? from when contest is created
   //Query will be sent to Mongo that says to change the field of active from true to false for this one 
   // const j = schedule.scheduleJob('51 * * * *', function(){
@@ -112,9 +113,9 @@ router.post("/contest/new/", (req, res) => {
   contest.save(function(err,contest) {
     console.log(contest)
     if(err) return err
-    let contestId = contest._id
+    work = contest._id
     schedule.scheduleJob('11 * * * *', function(){
-      console.log(contest._id)
+      console.log(work)
     Contest.update({_id:contestId},{"$set":{"active":false}})
     console.log('The answer to life, the universe, and everything!');
     });
