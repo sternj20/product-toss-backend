@@ -6,11 +6,13 @@ function checkActive() {
   let newData = {active: false}
   //Find all contests where the expiration date is greater than the current date and set them to not be active
 
-  Contest.findOneAndUpdate({expires: {$lte: currentDate}}, {$set:newData}, {upsert:true}, function(err, doc){
+Contest.update({expires:{$lte: currentDate}}, {$set: newData}, {upsert: true}, function(err, doc){
       if (err) return res.send(500, { error: err });
       return doc
   });
 }
+
+
 checkActive();
 
 //Use moment
