@@ -14,6 +14,7 @@ app.use(routes)
 mongoose.connect(process.env.MONGODB_URI 
   // {promiseLibrary: global.Promise }
 );
+mongoose.set('debug', true);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`app listening on port ${port}`))
