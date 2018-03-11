@@ -6,7 +6,6 @@ const aws = require('aws-sdk')
 const multer = require('multer')
 const multerS3 = require('multer-s3')
 const schedule = require('node-schedule');
-const moment = require('moment');
 
 require('dotenv').config();
 
@@ -103,33 +102,20 @@ router.put('/imgs/:uid/:id/:val', (req, res) => {
 })
 
 //Returns date one week from now at midnight
-function nextWeek(){
-  var today = new Date();
-  var nextWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-  nextWeek.setHours(0,0,0,0);
-  return nextWeek;
-}
+// function nextWeek(){
+//   var today = new Date();
+//   var nextWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 7);
+//   nextWeek.setHours(0,0,0,0);
+//   return nextWeek;
+// }
 
 //Adding a new contest
 router.post("/contest/new/", (req, res) => {
-  let contest = new Contest({name:req.body.name})
-  contest.save(function(err,contest) {
-    console.log(contest)
-    if(err) return err
-      let contestId = contest._id
-    schedule.scheduleJob(nextWeek(), function(){
-      let query = {'_id' : contestId}
-      let newData = {active: false}
-      Contest.update(query ,{$set: newData},{safe: true, upsert: true},
-        function(err, model) {
-          console.log(err);
-        });
-      console.log('Contest is over. Value of active has been changed from true to false')
-    });
-  });
+ let contest = new Contest({name:req.body.name})
+  console.log(req.body)
+  contest.save()
   res.send('')
 })
-var date = moment().add(7, 'days')
-console.log(date)
+
 module.exports = router;
 
