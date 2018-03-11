@@ -108,5 +108,14 @@ router.post("/contest/new/", (req, res) => {
   res.send('')
 })
 
+//Changes active status of contest from true to false if the expired date is older than current date 
+router.put('/contest/check-active', (req, res) => {
+  let currentDate = new Date()
+  let newData = {active: false}
+  Contest.update({expires: {$lte: currentDate}}, {$set:newData}, {upsert:true}, function(err, doc){
+      if (err) return res.send(500, { error: err });
+      return doc
+  });
+})
 module.exports = router;
 

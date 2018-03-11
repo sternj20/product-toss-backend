@@ -1,15 +1,15 @@
 const Contest = require('../models/Contest.js');
 
 function checkActive() {
-  //Get current date
-  let newData = {active: false}
-  //Find all contests where the expiration date is greater than the current date and set them to not be active
-
-  Contest.find({expires:{$lte: new Date().toISOString()}}, function (err, docs) {
-    // docs is an array
-    if(err) console.log(err)
-    console.log(docs)
-  });
+fetch('http://product-toss-backend.herokuapp.com/api/contest/check-active'{
+  method: 'put'
+}).then(function(response) {
+  console.log(response)
+}).catch(function(err) {
+  // Error :(
+  console.log(error)
+});
+console.log('Changed')
 }
 
 checkActive();
