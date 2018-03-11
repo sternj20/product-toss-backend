@@ -1,11 +1,11 @@
-const moment = require('moment');
 const Contest = require('../../../models/Contest.js');
-var now = moment()
 
 function checkActive() {
-  let currentDate = Date.now();
+  //Get current date
+  let currentDate = new Date()
   console.log('Hello');
-  Contest.find({created: {$gte: currentDate}, {$set: {active: false}}}, (err, contest) => {
+  //Find all contests where the expiration date is greater than the current date and set them to not be active
+  Contest.find({expires: {$gte: currentDate}, {$set: {active: false}}}, (err, contest) => {
     res.send(contest)
     console.log(Removing these entries.)
   })
