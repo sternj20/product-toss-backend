@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const Image = require('../../models/Image.js');
 const User = require('../../models/User.js');
+const Contest = require('../../models/Contest.js');
 const aws = require('aws-sdk')
 const multer = require('multer')
 const multerS3 = require('multer-s3')
@@ -107,8 +108,11 @@ router.post("/contest/new/", (req, res) => {
   // const j = schedule.scheduleJob('51 * * * *', function(){
   //   console.log('The answer to life, the universe, and everything!');
   // });
-  res.send('')
+  let contest = new Contest({name:req.body.name})
   console.log(req.body)
+  contest.save()
+  res.send('')
+
 })
 
 module.exports = router;
