@@ -101,14 +101,6 @@ router.put('/imgs/:uid/:id/:val', (req, res) => {
   res.send('')
 })
 
-//Returns date one week from now at midnight
-// function nextWeek(){
-//   var today = new Date();
-//   var nextWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 7);
-//   nextWeek.setHours(0,0,0,0);
-//   return nextWeek;
-// }
-
 //Adding a new contest
 router.post("/contest/new/", (req, res) => {
  let contest = new Contest({name:req.body.name})
