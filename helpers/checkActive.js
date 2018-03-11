@@ -4,10 +4,9 @@ function checkActive() {
   //Get current date
   let currentDate = new Date()
   console.log('Hello');
-  let query = {expires: {$lte: currentDate}}
   let newData = {active: false}
   //Find all contests where the expiration date is greater than the current date and set them to not be active
-  Contest.find(query, {$set:newData},{safe: true, upsert: true},
+  Contest.find({expires: {$lte: current}}, {$set:newData},{safe: true, upsert: true},
       function(err, model) {
         console.log(err);
       });
