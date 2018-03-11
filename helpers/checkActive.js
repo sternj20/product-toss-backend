@@ -2,8 +2,8 @@ const Contest = require('../models/Contest.js');
 const fetch = require('node-fetch');
 function checkActive() {
 fetch('http://product-toss-backend.herokuapp.com/api/contest/check-active', { method: 'PUT' })
-  .then(res => res.json())
-  .then(json => console.log(json));
+  .catch(err => console.error(err));
+  .then(res => res.send('Success'))
 }
 
 checkActive();
