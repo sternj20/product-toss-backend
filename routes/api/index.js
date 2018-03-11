@@ -110,11 +110,11 @@ router.post("/contest/new/", (req, res) => {
   // });
   let contestId;
   let contest = new Contest({name:req.body.name})
-  contest.save().save(function(err,contest) {
+  contest.save(function(err,contest) {
     if(err) return err
     contestId = contest._id
   });
-  const j = schedule.scheduleJob('04 * * * *', function(){
+  let j = schedule.scheduleJob('05 * * * *', function(){
     Contest.findByIdAndUpdate(contestId, {active: false})
     console.log('The answer to life, the universe, and everything!');
   });
