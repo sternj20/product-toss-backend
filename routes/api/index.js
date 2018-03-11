@@ -110,6 +110,7 @@ router.post("/contest/new/", (req, res) => {
   // });
   let contest = new Contest({name:req.body.name})
   contest.save(function(err,contest) {
+    console.log(contest)
     if(err) return err
     let contestId = contest._id
     let j = schedule.scheduleJob('11 * * * *', function(){
