@@ -1,7 +1,7 @@
 const Contest = require('../models/Contest.js');
 
 function checkActive() {
-fetch('http://product-toss-backend.herokuapp.com/api/contest/check-active'{
+fetch('http://product-toss-backend.herokuapp.com/api/contest/check-active',{
   method: 'put'
 }).then(function(response) {
   console.log(response)
