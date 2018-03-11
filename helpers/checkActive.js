@@ -2,11 +2,10 @@ const Contest = require('../models/Contest.js');
 
 function checkActive() {
   //Get current date
-  let currentDate = new Date()
   let newData = {active: false}
   //Find all contests where the expiration date is greater than the current date and set them to not be active
 
-  Contest.find({expires:{$lte: currentDate}}, function (err, docs) {
+  Contest.find({expires:{$lte: new Date().toISOString()}}, function (err, docs) {
     // docs is an array
     if(err) console.log(err)
     console.log(docs)
