@@ -120,3 +120,9 @@ router.put('/contest/check-active', (req, res) => {
 })
 module.exports = router;
 
+//Showing a single image based on ID
+router.get('/imgs/:id', (req, res) => {
+    Image.find({_id: req.params.id}, (err, img) => {
+        res.send(img)
+    })
+})
