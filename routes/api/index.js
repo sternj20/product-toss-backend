@@ -104,7 +104,7 @@ router.put('/imgs/:uid/:id/:val', (req, res) => {
 router.post("/contest/new/", (req, res) => {
  let contest = new Contest({name:req.body.name})
   console.log(req.body)
-  contest.save()
+  contest.save();
   res.send('')
 })
 
