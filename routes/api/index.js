@@ -116,6 +116,7 @@ router.put('/contest/check-active', (req, res) => {
       if (err) return res.send(500, { error: err });
       return doc
   });
+  res.send('Active status updated')
 })
 module.exports = router;
 
