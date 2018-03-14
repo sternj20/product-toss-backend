@@ -112,7 +112,7 @@ router.post("/contest/new/", (req, res) => {
 router.put('/contest/check-active', (req, res) => {
   let currentDate = new Date()
   let newData = {active: false}
-  Contest.update({expires: {$lte: currentDate}}, {$set:newData}, {upsert:true}, function(err, doc){
+  Contest.update({expires: {$lte: currentDate}}, {$set:newData}, {multi:true, upsert:true}, function(err, doc){
       if (err) return res.send(500, { error: err });
       return doc
   });

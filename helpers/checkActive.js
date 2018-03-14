@@ -6,15 +6,8 @@ fetch('http://product-toss-backend.herokuapp.com/api/contest/check-active', { me
     return console.log('Success')
   }).catch(function(err) {
     // Error :(
-    console.log(err)
+    return console.log(err)
   });
 }
 
 checkActive();
-
-//Use moment
-//Add a field to the contest model that says created at
-//Find contest where created at is >= 7 days ago
-//In this function use moment to check and see if created at time is >= a week ago
-//If it is, change active status to false 
-
