@@ -73,7 +73,7 @@ router.get('/user/:uid', (req, res) => {
   data = {}
   User.findOne({ _id : req.params.uid}).populate("votedImages").populate("images").exec((error, result) => {
     Image.find({ _id : { $nin: result.votedImages}}, (err, img) => {
-        Contest.find({}, (err, contest) => {
+        Contest.find({active:true}, (err, contest) => {
             data.contests = contest
             data.images = img
             data.uploads = result.images
@@ -114,7 +114,6 @@ router.post("/contest/new/", (req, res) => {
 
 //Submitting an image to a contest
 router.post("/contest/:cid/", (req, res) => {
-    console.log(req.body)
     let id = req.body._id
     Contest.update({_id: req.params.cid},  {$push: {submissions: id}},
     {safe: true, upsert: true},
