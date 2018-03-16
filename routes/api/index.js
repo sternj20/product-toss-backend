@@ -117,6 +117,7 @@ router.post("/contest/:cid/", (req, res) => {
     function(err, model) {
         console.log(err);
     });
+    res.send('')
 })
 
 //Changes active status of contest from true to false if the expired date is older than current date 
