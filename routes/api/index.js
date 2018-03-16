@@ -1,3 +1,5 @@
+const mongoose = require('mongoose');
+
 const router = require('express').Router();
 const Image = require('../../models/Image.js');
 const User = require('../../models/User.js');
@@ -85,8 +87,7 @@ router.put('/imgs/:uid/:id/:val', (req, res) => {
   Image.update(query, {$set: newData},{safe: true, upsert: true},
     function(err, model) {
       console.log(err);
-    }
-    );
+    });
   User.update(
     {_id: req.params.uid},
     {
@@ -108,6 +109,16 @@ router.post("/contest/new/", (req, res) => {
   res.send('')
 })
 
+//Submitting an image to a contest
+router.post("/contest/:cid/", (req, res) => {
+    let id = req.body._id
+    Contest.update({_id: req.params.cid},  {$push: {submissions: id}},
+    {safe: true, upsert: true},
+    function(err, model) {
+        console.log(err);
+    });
+})
+
 //Changes active status of contest from true to false if the expired date is older than current date 
 router.put('/contest/check-active', (req, res) => {
   let currentDate = new Date()
@@ -122,7 +133,7 @@ module.exports = router;
 
 //Showing a single image based on ID
 router.get('/imgs/:id', (req, res) => {
-    Image.find({_id: req.params.id}, (err, img) => {
+    Image.find({_id: req.params.id}, (err, img) =>{
         res.send(img)
     })
 })
