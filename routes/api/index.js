@@ -73,9 +73,12 @@ router.get('/user/:uid', (req, res) => {
   data = {}
   User.findOne({ _id : req.params.uid}).populate("votedImages").populate("images").exec((error, result) => {
     Image.find({ _id : { $nin: result.votedImages}}, (err, img) => {
-      data.images=img
-      data.uploads=result.images
-      res.send(data)
+        Contest.find({}, (err, contest) => {
+            data.contests = contest
+            data.images = img
+            data.uploads = result.images
+            res.send(data)            
+        })
     })
   })
 });
@@ -117,7 +120,7 @@ router.post("/contest/:cid/", (req, res) => {
     function(err, model) {
         console.log(err);
     });
-    res.send('')
+    res.send('Contest added')
 })
 
 //Changes active status of contest from true to false if the expired date is older than current date 
