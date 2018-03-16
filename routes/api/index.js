@@ -114,6 +114,7 @@ router.post("/contest/new/", (req, res) => {
 
 //Submitting an image to a contest
 router.post("/contest/:cid/", (req, res) => {
+    console.log(req.body)
     let id = req.body._id
     Contest.update({_id: req.params.cid},  {$push: {submissions: id}},
     {safe: true, upsert: true},
