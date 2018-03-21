@@ -74,6 +74,7 @@ router.get('/user/:uid', (req, res) => {
   User.findOne({ _id : req.params.uid}).populate("votedImages").populate("images").exec((error, result) => {
     Image.find({ _id : { $nin: result.votedImages}}, (err, img) => {
         Contest.find({active:true}).populate("submissions").exec((err, contest) => {
+            data.submissions = contest.submissions
             data.contests = contest
             data.images = img
             data.uploads = result.images
