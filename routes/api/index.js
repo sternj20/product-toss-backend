@@ -52,7 +52,20 @@ router.post('/imgs/:uid', upload.single('photo'), (req, res, next) => {
       );
     res.json(req.file)
   });
+})
 
+
+//Delete an image
+router.put('/imgs/:fileName', (req, res) => {
+    let params = {
+      Bucket: process.env.AWS_BUCKET,
+      Key: req.params.fileName
+    /* where value for 'Key' equals 'pathName1/pathName2/.../pathNameN/fileName.ext' - full path name to your file without '/' at the beginning */
+    };
+    s3.deleteObject(params, function(err, data) {
+      if (err) console.log(err, err.stack); // an error occurred
+      else     res.send(data);           // successful response
+    });
 })
 
 //After user is authenticated with firebase, they are added to our DB
@@ -71,10 +84,10 @@ router.post('/user/new/', (req, res) => {
 //Showing user data
 router.get('/user/:uid', (req, res) => {
   data = {}
+  submissions = []
   User.findOne({ _id : req.params.uid}).populate("votedImages").populate("images").exec((error, result) => {
     Image.find({ _id : { $nin: result.votedImages}}, (err, img) => {
         Contest.find({active:true}).populate("submissions").exec((err, contest) => {
-            data.submissions = contest.submissions
             data.contests = contest
             data.images = img
             data.uploads = result.images
