@@ -56,15 +56,20 @@ router.post('/imgs/:uid', upload.single('photo'), (req, res, next) => {
 
 
 //Delete an image
-router.put('/imgs/:fileName', (req, res) => {
+router.put('/imgs/:fileName/:imgId', (req, res) => {
     let params = {
       Bucket: process.env.AWS_BUCKET,
       Key: req.params.fileName
     /* where value for 'Key' equals 'pathName1/pathName2/.../pathNameN/fileName.ext' - full path name to your file without '/' at the beginning */
     };
     s3.deleteObject(params, function(err, data) {
-      if (err) console.log(err, err.stack); // an error occurred
-      else     res.send(data);           // successful response
+      if (err){
+        console.log(err, err.stack);
+      } 
+      else{
+        res.send(data)
+        Image.find({_id:req.params.imgId}).remove().exec();
+      }    
     });
 })
 
