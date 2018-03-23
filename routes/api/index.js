@@ -57,7 +57,7 @@ router.post('/imgs/:uid', upload.single('photo'), (req, res, next) => {
 //Delete an image
 router.put('/imgs/:uid/', (req, res) => {
     // Delete img from imgs array in user model
-    User.find({_id: req.body.uid}, function(err, user){
+    User.find({_id: req.params.uid}, function(err, user){
         if(err) console.log(err)
         user[0].images.remove(req.body.imgId)
         user[0].save()
