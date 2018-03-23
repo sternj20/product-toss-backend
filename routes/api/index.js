@@ -119,6 +119,16 @@ router.get('/user/:uid', (req, res) => {
 })
 });
 
+//Get archived contests, sorted by date created and submissions sorted by most votes
+router.get('/contests', (req, res) => {
+    Contest.find({active: false}).sort('-createdAt')
+        .populate({path: 'submissions', options: { sort: { 'votes': -1 }}})
+        .exec(function(err, docs) {
+            let newDocs = docs.sort('votes')
+            res.send(newDocs)
+        });
+})
+
 //Voting on an image
 router.put('/imgs/:uid/:id/:val', (req, res) => {
   let query = {'_id': req.params.id}
