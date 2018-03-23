@@ -1,7 +1,9 @@
 //SEED DB
 
 const mongoose = require('mongoose');
-const Image = require('./models/Image.js');
+const Image = require('../models/Image.js');
+const Contest = require('../models/Contest.js');
+
 require('dotenv').config();
 
 const images = [
@@ -51,27 +53,15 @@ images.map(data => {
   // Initialize a model with image data
   let newImg = new Image(data);
   // and save it into the database
-  newImg.save();
-})
-
-
-
-//Upload an image
-router.post('/imgs/:uid', upload.single('photo'), (req, res, next) => {
-  let img = new Image({url: req.file.location})
-  img.save(function(err,img) {
+  newImg.save(function(err,img) {
     if(err) return err
       let imgId = img._id
-  User.update(
-      {_id: req.params.uid},
-      {
-        $push: {images:imgId},
-    },
-    {safe: true, upsert: true},
-    function(err, model) {
-        console.log(err);
-    }
-    );
-  res.json(req.file)
-});
+      Contest.update({_id: '5ab491f4aa0eca0014a82b67'},  {$push: {submissions: imgId}},
+        {safe: true, upsert: true},
+        function(err, model) {
+            console.log(err);
+        });
+    })
+    return('finishe')
 })
+

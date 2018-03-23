@@ -17,7 +17,8 @@ const ContestSchema = new Schema({
 	submissions: [{
 	  	type: Schema.Types.ObjectId,
 	  	ref: "Image"
-  }]
+  }], {
+    timestamps: true
 })
 
 module.exports = mongoose.model("Contest", ContestSchema);
