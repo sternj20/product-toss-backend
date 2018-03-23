@@ -73,7 +73,7 @@ router.put('/imgs/:uid/', (req, res) => {
         //Delete img from AWS S3
         let params = {
           Bucket: process.env.AWS_BUCKET,
-          Key: req.params.fileName
+          Key: req.body.fileName
         /* where value for 'Key' equals 'pathName1/pathName2/.../pathNameN/fileName.ext' - full path name to your file without '/' at the beginning */
         };
         s3.deleteObject(params, function(err, data) {
