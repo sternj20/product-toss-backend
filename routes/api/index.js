@@ -55,41 +55,41 @@ router.post('/imgs/:uid', upload.single('photo'), (req, res, next) => {
 
 
 //Delete an image
-router.put('/imgs/:uid/:fileName/:imgId', (req, res) => {
+router.put('/imgs/:uid/', (req, res) => {
     console.log(req.body)
     // Delete img from imgs array in user model
-    User.find({_id: req.params.uid}, function(err, user){
-        if(err) console.log(err)
-        user[0].images.remove(req.params.imgId)
-        user[0].save()
+//     User.find({_id: req.params.uid}, function(err, user){
+//         if(err) console.log(err)
+//         user[0].images.remove(req.params.imgId)
+//         user[0].save()
     
-    //Delete img from all contests
-    Contest.find({}, function(err, contest){
-        contest.forEach(element => {
-            element.submissions.remove(req.params.imgId)
-            element.save()        
-        })
-        if(err) console.log(err)
-        console.log(contest)
+//     //Delete img from all contests
+//     Contest.find({}, function(err, contest){
+//         contest.forEach(element => {
+//             element.submissions.remove(req.params.imgId)
+//             element.save()        
+//         })
+//         if(err) console.log(err)
+//         console.log(contest)
 
-    })
-    //Delete img from AWS S3
-    let params = {
-      Bucket: process.env.AWS_BUCKET,
-      Key: req.params.fileName
-    /* where value for 'Key' equals 'pathName1/pathName2/.../pathNameN/fileName.ext' - full path name to your file without '/' at the beginning */
-    };
-    s3.deleteObject(params, function(err, data) {
-      if (err){
-        console.log(err, err.stack);
-      } 
-      else{
-        res.send(data)
-        //Delete img from Mongo
-        Image.find({_id:req.params.imgId}).remove().exec();
-    }
-    });
-});
+//     })
+//     //Delete img from AWS S3
+//     let params = {
+//       Bucket: process.env.AWS_BUCKET,
+//       Key: req.params.fileName
+//     /* where value for 'Key' equals 'pathName1/pathName2/.../pathNameN/fileName.ext' - full path name to your file without '/' at the beginning */
+//     };
+//     s3.deleteObject(params, function(err, data) {
+//       if (err){
+//         console.log(err, err.stack);
+//       } 
+//       else{
+//         res.send(data)
+//         //Delete img from Mongo
+//         Image.find({_id:req.params.imgId}).remove().exec();
+//     }
+//     });
+// });
 })
 
 //After user is authenticated with firebase, they are added to our DB
