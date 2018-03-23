@@ -59,9 +59,9 @@ router.put('/imgs/:uid/', (req, res) => {
     // Delete img from imgs array in user model
     User.find({_id: req.params.uid}, function(err, user){
         if(err) console.log(err)
-        user[0].images.remove(req.body.imgId)
+            user[0].images.remove(req.body.imgId)
         user[0].save()
-    
+
         //Delete img from all contests
         Contest.find({}, function(err, contest){
             contest.forEach(element => {
@@ -74,19 +74,19 @@ router.put('/imgs/:uid/', (req, res) => {
         let params = {
           Bucket: process.env.AWS_BUCKET,
           Key: req.body.fileName
-        /* where value for 'Key' equals 'pathName1/pathName2/.../pathNameN/fileName.ext' - full path name to your file without '/' at the beginning */
-        };
-        s3.deleteObject(params, function(err, data) {
+          /* where value for 'Key' equals 'pathName1/pathName2/.../pathNameN/fileName.ext' - full path name to your file without '/' at the beginning */
+      };
+      s3.deleteObject(params, function(err, data) {
           if (err){
             console.log(err, err.stack);
-          } 
-          else{
+        } 
+        else{
             res.send(data)
             //Delete img from Mongo
             Image.find({_id:req.body.imgId}).remove().exec();
         }
-        });
     });
+  });
     console.log('image deleted')
 })
 
@@ -101,33 +101,31 @@ router.post('/user/new/', (req, res) => {
 })
 
 
-
-
 //Showing user data
 router.get('/user/:uid', (req, res) => {
-  data = {}
-  submissions = []
-  User.findOne({ _id : req.params.uid}).populate("votedImages").populate("images").exec((error, result) => {
-    Image.find({ _id : { $nin: result.votedImages}}, (err, img) => {
-        Contest.find({active:true}).populate("submissions").exec((err, contest) => {
-            data.contests = contest
-            data.images = img
-            data.uploads = result.images
-            res.send(data)            
+    data = {}
+    submissions = []
+    User.findOne({ _id : req.params.uid}).populate("votedImages").populate("images").exec((error, result) => {
+        //Find images you have not voted on 
+        Image.find({ _id : { $nin: result.votedImages}}, (err, img) => {
+            //Get active contest
+            Contest.find({active:true}).populate("submissions").exec((err, contest) => {
+                //Get archived contests, sorted by date created and submissions sorted by most votes
+                Contest.find({active: false}).sort('-createdAt')
+                .populate({path: 'submissions', options: { sort: { 'votes': -1 }}})
+                .exec(function(err, docs) {
+                    let archivedContests = docs.sort('votes')
+                    data.archivedContests = archivedContests
+                    data.activeContest = contest
+                    data.images = img
+                    data.uploads = result.images
+                    res.send(data)            
+                })
+            })
         })
-    })
-})
+    });
 });
 
-//Get archived contests, sorted by date created and submissions sorted by most votes
-router.get('/contests', (req, res) => {
-    Contest.find({active: false}).sort('-createdAt')
-        .populate({path: 'submissions', options: { sort: { 'votes': -1 }}})
-        .exec(function(err, docs) {
-            let newDocs = docs.sort('votes')
-            res.send(newDocs)
-        });
-})
 
 //Voting on an image
 router.put('/imgs/:uid/:id/:val', (req, res) => {
@@ -152,10 +150,10 @@ router.put('/imgs/:uid/:id/:val', (req, res) => {
 
 //Adding a new contest
 router.post("/contest/new/", (req, res) => {
-   let contest = new Contest({name:req.body.name})
-   console.log(req.body)
-   contest.save();
-   res.send('')
+ let contest = new Contest({name:req.body.name})
+ console.log(req.body)
+ contest.save();
+ res.send('')
 })
 
 //Submitting an image to a contest
