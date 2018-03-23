@@ -54,3 +54,24 @@ images.map(data => {
   newImg.save();
 })
 
+
+
+//Upload an image
+router.post('/imgs/:uid', upload.single('photo'), (req, res, next) => {
+  let img = new Image({url: req.file.location})
+  img.save(function(err,img) {
+    if(err) return err
+      let imgId = img._id
+  User.update(
+      {_id: req.params.uid},
+      {
+        $push: {images:imgId},
+    },
+    {safe: true, upsert: true},
+    function(err, model) {
+        console.log(err);
+    }
+    );
+  res.json(req.file)
+});
+})
