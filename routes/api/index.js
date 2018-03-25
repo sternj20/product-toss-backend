@@ -106,10 +106,12 @@ router.get('/user/:uid', (req, res) => {
     data = {}
     submissions = []
     User.findOne({ _id : req.params.uid}).populate("votedImages").populate("images").exec((error, result) => {
+        console.log(result)
         //Find images you have not voted on 
         Image.find({ _id : { $nin: result.votedImages}}, (err, img) => {
             //Get active contest
-            Contest.find({active:true}).populate("submissions").exec((err, contest) => {
+            Contest.findOne({active:true}).populate("submissions", null, { _id: { $nin: result.votedImages}})
+            .exec((err, contest) => {
                 //Get archived contests, sorted by date created and submissions sorted by most votes
                 Contest.find({active: false}).sort('-createdAt')
                 .populate({path: 'submissions', options: { sort: { 'votes': -1 }}})
@@ -117,15 +119,13 @@ router.get('/user/:uid', (req, res) => {
                     let archivedContests = docs.sort('votes')
                     data.archivedContests = archivedContests
                     data.activeContest = contest
-                    data.images = img
                     data.uploads = result.images
                     res.send(data)            
                 })
             })
         })
-    });
+    });                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
 });
-
 
 //Voting on an image
 router.put('/imgs/:uid/:id/:val', (req, res) => {
