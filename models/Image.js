@@ -5,6 +5,9 @@ const imageSchema = new Schema({
 	url: {
 		type: String
 	},
+    author: {
+        type: String
+    },
 	name: {
 		type: String
 	},

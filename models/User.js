@@ -20,10 +20,12 @@ const UserSchema = new Schema({
     ref: "Image" 
     }],
     followers: [{
-    type: 'String'
+    type: Schema.Types.ObjectId,
+    ref: "User"
     }],
     following: [{
-    type: 'String'
+    type: Schema.Types.ObjectId,
+    ref: "User"
     }]
 }, {
     timestamps: true

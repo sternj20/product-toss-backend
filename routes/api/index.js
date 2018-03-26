@@ -139,9 +139,12 @@ router.post ('/user/:uid/:uid2', (req, res) => {
 })
 //Admin route -- shows all data
 router.get('/admin', (req, res) => {
-    Contest.findOne({active:true}).populate({path: 'submissions', options: { sort: { 'votes' : -1}}}).exec((err, contest) => {
-        res.send(contest)
-    })
+    // Contest.findOne({active:true}).populate({path: 'submissions', options: { sort: { 'votes' : -1}}}).exec((err, contest) => {
+    //     res.send(contest)
+    // })
+    User.findOne({_id: 'sXRfS6EcfDc3xvH5c8zQF3Xttio2'}).populate('followers').populate('images').exec((error, result) => {
+        res.send(result)
+    });
 })
 
 //Voting on an image
