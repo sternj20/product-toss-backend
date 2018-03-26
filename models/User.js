@@ -2,28 +2,31 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
+    _id: {
+        type: Schema.Types.ObjectId
+    },
     name: {
     type: String,
-  },
-  email: {
+    },
+    email: {
     type: String,
-  },
-  images: [{
-  	type: Schema.Types.ObjectId,
-  	ref: "Image"
-  }],
-  votedImages: [{
+    },
+    images: [{
+    	type: Schema.Types.ObjectId,
+    	ref: "Image"
+    }],
+    votedImages: [{
     type: Schema.Types.ObjectId,
     ref: "Image" 
-  }],
-  followers: [{
+    }],
+    followers: [{
     type: Schema.Types.ObjectId,
     ref: "User"
-  }],
-  following: [{
+    }],
+    following: [{
     type: Schema.Types.ObjectId,
     ref: "User"
-  }]
+    }]
 }, {
     timestamps: true
 });
