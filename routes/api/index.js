@@ -92,13 +92,14 @@ router.put('/imgs/:uid/', (req, res) => {
 
 //After user is authenticated with firebase, they are added to our DB
 router.post('/user/new/', (req, res) => {
-    let id = mongoose.Types.ObjectId.createFromHexString(req.body.uid)
-  let user = new User({
-    _id: id,
-    email: req.body.email
-})
-  user.save()
-  res.json(req.body)
+    let id = mongoose.Types.ObjectId(req.body.uid)
+    let user = new User({
+        _id: id,
+        email: req.body.email
+    })
+    console.log(user)
+    user.save()
+    res.json(req.body)
 })
 
 
