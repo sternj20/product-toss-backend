@@ -130,12 +130,14 @@ router.get('/user/:uid', (req, res) => {
 //Route to follow a user
 //Second user is added to following array in User model fist array
 //First user is added to followers array in User model for second user
-router.post('/user/:uid/:uid2', (req, res) => {
-    User.update({ _id: req.params.uid}, {$push: {following: req.params.uid2}},{safe: true, upsert: true},
+router.put('/user/:uid/:uid2', (req, res) => {
+var myObjectId = mongoose.Types.ObjectId.createFromHexString("5ab4b09f15387b00142e87df");
+
+    User.update({ _id: req.params.uid}, {$push: {following: myObjectId}},{safe: true, upsert: true},
         function(err, model) {
             console.log(err);
         });
-    res.send('Contest added')
+    res.send('Follower added')
 })
 //Admin route -- shows all data
 router.get('/admin', (req, res) => {
