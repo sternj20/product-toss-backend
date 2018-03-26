@@ -106,7 +106,6 @@ router.get('/user/:uid', (req, res) => {
     data = {}
     submissions = []
     User.findOne({ _id : req.params.uid}).populate("votedImages").populate("images").exec((error, result) => {
-        console.log(result)
         //Find images you have not voted on 
         Image.find({ _id : { $nin: result.votedImages}}, (err, img) => {
             //Get active contest
@@ -130,14 +129,13 @@ router.get('/user/:uid', (req, res) => {
 //Route to follow a user
 //Second user is added to following array in User model fist array
 //First user is added to followers array in User model for second user
-router.put('/user/:uid/:uid2', (req, res) => {
-var myObjectId = mongoose.Types.ObjectId.createFromHexString("5ab4b09f15387b00142e87df");
-
-    User.update({ _id: req.params.uid}, {$push: {following: myObjectId}},{safe: true, upsert: true},
-        function(err, model) {
-            console.log(err);
-        });
-    res.send('Follower added')
+router.post ('/user/:uid/:uid2', (req, res) => {
+    User.update({ _id: req.params.uid}, {$push: {following: req.params.uid2}},{safe: true, upsert: true}, function(err, model) {
+        console.log(err);
+        User.update({ _id: req.params.uid2}, {$push: {followers: req.params.uid}}, {safe: true, upsert: true}, function(err, model) {
+            res.send('Follower added')
+        })
+    });
 })
 //Admin route -- shows all data
 router.get('/admin', (req, res) => {
@@ -169,10 +167,10 @@ router.put('/imgs/:uid/:id/:val', (req, res) => {
 
 //Adding a new contest
 router.post("/contest/new/", (req, res) => {
- let contest = new Contest({name:req.body.name})
- console.log(req.body)
- contest.save();
- res.send('')
+   let contest = new Contest({name:req.body.name})
+   console.log(req.body)
+   contest.save();
+   res.send('')
 })
 
 //Submitting an image to a contest
