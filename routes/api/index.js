@@ -93,7 +93,7 @@ router.put('/imgs/:uid/', (req, res) => {
 //After user is authenticated with firebase, they are added to our DB
 router.post('/user/new/', (req, res) => {
   let user = new User({
-    _id: new mongoose.Types.ObjectId(req.body.uid),
+    firebaseID: req.body.uid,
     email: req.body.email
 })
   user.save()
@@ -105,7 +105,7 @@ router.post('/user/new/', (req, res) => {
 router.get('/user/:uid', (req, res) => {
     data = {}
     submissions = []
-    User.findOne({ _id : req.params.uid}).populate("votedImages").populate("images").exec((error, result) => {
+    User.findOne({ firebaseID : req.params.uid}).populate("votedImages").populate("images").exec((error, result) => {
         //Find images you have not voted on 
         Image.find({ _id : { $nin: result.votedImages}}, (err, img) => {
             //Get active contest
@@ -156,7 +156,7 @@ router.put('/imgs/:uid/:id/:val', (req, res) => {
       console.log(err);
   });
   User.update(
-    {_id: req.params.uid},
+    {firebaseID: req.params.uid},
     {
       $push: {votedImages:req.params.id},
   },
