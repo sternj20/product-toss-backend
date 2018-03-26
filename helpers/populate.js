@@ -56,7 +56,7 @@ images.map(data => {
   newImg.save(function(err,img) {
     if(err) return err
       let imgId = img._id
-      Contest.update({_id: '5ab49afaaa30e40014882db0'},  {$push: {submissions: imgId}, },
+      Contest.update({_id: '5ab49aa9aa30e40014882daf'},  {$push: {submissions: imgId}, },
         {safe: true, upsert: true},
         function(err, model) {
             console.log(err);
