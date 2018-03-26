@@ -110,7 +110,7 @@ router.get('/user/:uid', (req, res) => {
         //Find images you have not voted on 
         Image.find({ _id : { $nin: result.votedImages}}, (err, img) => {
             //Get active contest
-            Contest.findOne({active:true}).populate("submissions", null, { _id: { $nin: result.votedImages}})
+            Contest.findOne({active:true}).populate("submissions")
             .exec((err, contest) => {
                 //Get archived contests, sorted by date created and submissions sorted by most votes
                 Contest.find({active: false}).sort('-createdAt')
@@ -126,6 +126,23 @@ router.get('/user/:uid', (req, res) => {
         })
     });                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
 });
+
+//Route to follow a user
+//Second user is added to following array in User model fist array
+//First user is added to followers array in User model for second user
+router.post('/user/:uid/:uid2', (req, res) => {
+    User.update({ _id: req.params.uid}, {$push: {following: req.params.uid2}},{safe: true, upsert: true},
+        function(err, model) {
+            console.log(err);
+        });
+    res.send('Contest added')
+})
+//Admin route -- shows all data
+router.get('/admin', (req, res) => {
+    Contest.findOne({active:true}).populate({path: 'submissions', options: { sort: { 'votes' : -1}}}).exec((err, contest) => {
+        res.send(contest)
+    })
+})
 
 //Voting on an image
 router.put('/imgs/:uid/:id/:val', (req, res) => {
@@ -185,3 +202,4 @@ router.get('/imgs/:id', (req, res) => {
         res.send(img)
     })
 })
+

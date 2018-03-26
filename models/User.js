@@ -18,6 +18,14 @@ const UserSchema = new Schema({
   votedImages: [{
     type: Schema.Types.ObjectId,
     ref: "Image" 
+  }],
+  followers: [{
+    type: Schema.Types.ObjectId,
+    ref: "User"
+  }],
+  following: [{
+    type: Schema.Types.ObjectId,
+    ref: "User"
   }]
 }, {
     timestamps: true
