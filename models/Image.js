@@ -8,6 +8,9 @@ const imageSchema = new Schema({
     createdBy: {
         type: String
     },
+    userName: {
+        type: String
+    },
     author: {
         type: String
     },

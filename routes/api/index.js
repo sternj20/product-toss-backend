@@ -37,7 +37,7 @@ const upload = multer({
 router.post('/imgs/:uid/:email', upload.single('photo'), (req, res, next) => {
   let img = new Image({url: req.file.location, 
     createdBy: req.params.uid,
-    email: req.params.email})
+    userName: req.params.email.split('@')[0]})
   img.save(function(err,img) {
     if(err) return err
       let imgId = img._id
