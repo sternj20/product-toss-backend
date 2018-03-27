@@ -107,9 +107,15 @@ router.post('/user/new/', (req, res) => {
 router.get('/user/:uid', (req, res) => {
     data = {}
     submissions = []
-    User.findOne({ firebaseID: req.params.uid}).populate("votedImages").populate("images").exec((error, result) => {
+    User.findOne({ firebaseID: req.params.uid})
+    .populate("votedImages")
+    .populate("images")
+    //Populate images from users folowed
+    .populate({path : 'following', populate : {path : 'images'}})
+    .populate("followers").exec((error, result) => {
+        console.log(result.following)
         //Find images you have not voted on 
-        Image.find({ _id : { $nin: result.votedImages}}, (err, img) => {
+        Image.find({ _id : { in: result.following}}, (err, img) => {
             //Get active contest
             Contest.findOne({active:true}).populate("submissions", null, { _id: { $nin: result.votedImages}})
             .exec((err, contest) => {
@@ -121,7 +127,9 @@ router.get('/user/:uid', (req, res) => {
                     data.archivedContests = archivedContests
                     data.activeContest = contest
                     data.uploads = result.images
-                    res.send(data)            
+                    data.followers = result.followers
+                    data.following = result.following
+                    res.send(data)          
                 })
             })
         })
