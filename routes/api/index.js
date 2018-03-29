@@ -96,7 +96,8 @@ router.put('/imgs/:uid/', (req, res) => {
 router.post('/user/new/', (req, res) => {
   let user = new User({
     firebaseID: req.body.uid,
-    email: req.body.email
+    email: req.body.email,
+    name: req.body.email.split('@')[0]
 })
   user.save()
   res.json(req.body)

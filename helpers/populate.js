@@ -2,6 +2,8 @@
 
 const mongoose = require('mongoose');
 const Image = require('../models/Image.js');
+const User = require('../models/User.js');
+
 const Contest = require('../models/Contest.js');
 
 require('dotenv').config();
@@ -51,17 +53,21 @@ mongoose.connect(process.env.MONGODB_URI,
 // Go through each image
 images.map(data => {
   // Initialize a model with image data
-  let newImg = new Image(data);
+  let newImg = new Image({url:data.url, userName: 'test'});
   // and save it into the database
   newImg.save(function(err,img) {
     if(err) return err
       let imgId = img._id
-      Contest.update({_id: '5ab49aa9aa30e40014882daf'},  {$push: {submissions: imgId}, },
+      // Contest.update({_id: '5ab49aa9aa30e40014882daf'},  {$push: {submissions: imgId}, },
+      //   {safe: true, upsert: true},
+      //   function(err, model) {
+      //       console.log(err);
+      //   });
+      User.update({_id: '5ab894316ffe08001403dc48'},  {$push: {images: imgId}, },
         {safe: true, upsert: true},
         function(err, model) {
             console.log(err);
         });
     })
-    return('finishe')
 })
 
