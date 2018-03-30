@@ -137,6 +137,13 @@ router.get('/user/:uid', (req, res) => {
     });                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
 });
 
+//Getting data for other users
+router.get('/user/other/:uid', (req, res) => {
+    User.findOne({ firebaseID: req.params.uid}).populate("images").exec(function(err, img){
+        res.send(img)
+    })
+})
+
 //Route to follow a user
 //Second user is added to following array in User model fist array
 //First user is added to followers array in User model for second user
