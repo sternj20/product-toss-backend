@@ -139,7 +139,7 @@ router.get('/user/:uid', (req, res) => {
 
 //Getting data for other users
 router.get('/user/other/:uid', (req, res) => {
-    User.findOne({ firebaseID: req.params.uid}).populate("images").exec(function(err, img){
+    User.findOne({ _id: req.params.uid}).populate("images").exec(function(err, img){
         res.send(img)
     })
 })
