@@ -114,7 +114,6 @@ router.get('/user/:uid', (req, res) => {
     //Populate images from users folowed
     .populate({path : 'following', populate : {path : 'images'}})
     .populate("followers").exec((error, result) => {
-        console.log(result.following)
         //Find images you have not voted on 
         Image.find({ _id : { in: result.following}}, (err, img) => {
             //Get active contest
@@ -130,6 +129,7 @@ router.get('/user/:uid', (req, res) => {
                     data.uploads = result.images
                     data.followers = result.followers
                     data.following = result.following
+                    data.userID = result._id
                     res.send(data)          
                 })
             })
