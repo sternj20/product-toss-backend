@@ -21,11 +21,13 @@ const UserSchema = new Schema({
     }],
     followers: [{
     type: Schema.Types.ObjectId,
-    ref: "User"
+    ref: "User",
+    unique: true
     }],
     following: [{
     type: Schema.Types.ObjectId,
-    ref: "User"
+    ref: "User",
+    unique: true
     }]
 }, {
     timestamps: true
