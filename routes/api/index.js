@@ -147,10 +147,10 @@ router.get('/user/other/:uid', (req, res) => {
 //Route to follow a user
 //Second user is added to following array in User model fist array
 //First user is added to followers array in User model for second user
-router.post ('/user/:uid/:uid2', (req, res) => {
+router.post ('/user/:uid/:uid2/:id2', (req, res) => {
     User.update({ firebaseID: req.params.uid}, {$push: {following: req.params.uid2}},{safe: true, upsert: true}, function(err, model) {
         console.log(err);
-        User.update({ _id: req.params.uid2}, {$push: {followers: req.params.uid}}, {safe: true, upsert: true}, function(err, model) {
+        User.update({ firebaseID : req.params.uid2}, {$push: {followers: req.params.id2}}, {safe: true, upsert: true}, function(err, model) {
             res.send('Follower added')
         })
     });
