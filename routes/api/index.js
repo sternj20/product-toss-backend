@@ -42,7 +42,7 @@ router.post('/imgs/:uid/:email', upload.single('photo'), (req, res, next) => {
     if(err) return err
       let imgId = img._id
   User.update(
-      { firebaseID: req.params.uid},
+      { _id: req.params.uid},
       {
         $push: {images:imgId},
     },
