@@ -53,21 +53,21 @@ mongoose.connect(process.env.MONGODB_URI,
 // Go through each image
 images.map(data => {
   // Initialize a model with image data
-  let newImg = new Image({url:data.url, userName: 'testdummy123', createdBy: 'MeiL5tDl2ZbmIKZBFiEnnnBVHpT2'});
+  let newImg = new Image({url:data.url, userName: 'testdummy123', createdBy: '5abc3dcd3b82c9001471f518'});
   // and save it into the database
   newImg.save(function(err,img) {
     if(err) return err
       let imgId = img._id
-      Contest.update({_id: "5ab49afaaa30e40014882db0"},  {$push: {submissions: imgId}, },
+      // Contest.update({_id: "5ab49afaaa30e40014882db0"},  {$push: {submissions: imgId}, },
+      //   {safe: true, upsert: true},
+      //   function(err, model) {
+      //       console.log(err);
+      //   });
+      User.update({_id: '5abc3dcd3b82c9001471f518'},  {$push: {images: imgId}, },
         {safe: true, upsert: true},
         function(err, model) {
             console.log(err);
         });
-    //   User.update({_id: '5abc3b585538df0014768187'},  {$push: {images: imgId}, },
-    //     {safe: true, upsert: true},
-    //     function(err, model) {
-    //         console.log(err);
-    //     });
     })
 })
 

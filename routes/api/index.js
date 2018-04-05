@@ -155,6 +155,16 @@ router.post ('/user/:uid/:uid2', (req, res) => {
         })
     });
 })
+
+//Route to unfolow a user
+router.put('/user/:uid/:uid2', (req, res) => {
+    User.update({ _id: req.params.uid}, {$pull: {following: req.params.uid2}}, function(err, model) {
+        console.log(err);
+        User.update( { _id: req.params.uid2}, {$pull: {followers: req.params.uid}}, function(err, model) {
+            res.send('follower deleted')
+        })
+    })
+})
 //Admin route -- shows all data
 router.get('/admin', (req, res) => {
     // Contest.findOne({active:true}).populate({path: 'submissions', options: { sort: { 'votes' : -1}}}).exec((err, contest) => {
