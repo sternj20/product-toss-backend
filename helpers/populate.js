@@ -58,16 +58,17 @@ images.map(data => {
   newImg.save(function(err,img) {
     if(err) return err
       let imgId = img._id
-      // Contest.update({_id: "5ab49afaaa30e40014882db0"},  {$push: {submissions: imgId}, },
-      //   {safe: true, upsert: true},
-      //   function(err, model) {
-      //       console.log(err);
-      //   });
-      User.update({_id: '5abc3dcd3b82c9001471f518'},  {$push: {images: imgId}, },
+      Contest.update({_id: "5ab49afaaa30e40014882db0"},  {$push: {submissions: imgId}, },
         {safe: true, upsert: true},
         function(err, model) {
             console.log(err);
         });
+      // User.update({_id: '5abc3dcd3b82c9001471f518'},  {$push: {images: imgId}, },
+      //   {safe: true, upsert: true},
+      //   function(err, model) {
+      //       console.log(err);
+      //   });
     })
 })
+
 

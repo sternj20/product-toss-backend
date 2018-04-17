@@ -24,6 +24,10 @@ const imageSchema = new Schema({
 		type: Number,
 		default: 0
 	},
+    collapsed: {
+        type: Boolean,
+        default: true
+    }
 }, {
     timestamps: true
 });
